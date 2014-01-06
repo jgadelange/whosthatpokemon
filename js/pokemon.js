@@ -24,7 +24,7 @@ var startTime;
 // Used for difficulty setting
 var currentDifficulty = 0;
 var newDifficulty = 0;
-var imageDirectory;
+var imageDirectory = 'images/artwork/';
 
 // Set if a Pokemon image has been preloaded
 var pokemonPreloaded = false;
@@ -49,40 +49,31 @@ var upcomingPokemonArrayPos;
 
 $(document).ready(function() {
     generateNewNumbers(true);
+    var p = $.urlParam('pokemon')
+    var r = $.urlParam('reveal')
+    if (p) {
+        preloadPokemon(p);
+    }
+    if (r) {
+        setTimeout(revealPokemon, 2000);
+    }
     newPokemon();
 });
 
-/*
- * Sets the difficulty level, which is essentially choosing where we get the images from.
- */
-
-function setDifficulty(selectedDifficulty) {
-
-    if (selectedDifficulty == 0) {
-        imageDirectory = 'images/artwork/';
-    } else if (selectedDifficulty == 1) {
-        imageDirectory = 'images/sprites/front/';
-    } else if (selectedDifficulty == 2) {
-        imageDirectory = 'images/sprites/back/';
-    } else {
-        imageDirectory = null;
+// Helper function to extract url parameters.
+$.urlParam = function(name){
+    var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
     }
-
-    if (newDifficulty == -1) {
-        document.getElementById('diff' + selectedDifficulty).className += " current";
-        currentDifficulty = selectedDifficulty;
-    } else {
-        document.getElementById('diff' + newDifficulty).className = document.getElementById('diff' + newDifficulty).className.replace('selected','');
-
-        if(selectedDifficulty != currentDifficulty)
-            document.getElementById('diff' + selectedDifficulty).className += " selected";
-
-        document.getElementById('infoBoxMain').setAttribute('style', 'display: inherit');
+    else{
+       return results[1] || 0;
     }
-
-    newDifficulty = selectedDifficulty;
-
 }
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
 
 /*
  * Remove the silhouette of the Pokemon, and show the user that they are right, if they
@@ -96,7 +87,7 @@ function revealPokemon() {
     silhouette(currentPokemonImageUrl, 'shadowImage', false);
 
     // Give the Pokemon name
-    document.getElementById('pokemonGuess').value = currentPokemonNames[selectedLanguage];
+    $('#pokemonGuess').text("Het is " + currentPokemonNames[selectedLanguage].toProperCase() + "!");
 
     // Update to any new settings that have been selected
     generateNewNumbers();
@@ -114,7 +105,7 @@ function revealPokemon() {
 
 function generateNewNumbers(force) {
 
-    if(force || (currentGen !== newGen)) {
+    if(force) {
         var i=0, j;
         
         upcomingPokemon = new Array();
@@ -135,8 +126,9 @@ function generateNewNumbers(force) {
  * it preloaded, false otherwise.
  */
 
-function preloadPokemon() {
-    currentPokemonNumber = getRandomPokemonNumber();
+function preloadPokemon(id) {
+
+    currentPokemonNumber = (id > 0) ? id : getRandomPokemonNumber();
     
     if(currentPokemonNumber > 0) {
         currentPokemonNames = getPokemonNames(currentPokemonNumber);
@@ -154,8 +146,6 @@ function preloadPokemon() {
         return false;
     }
 }
-
-
 
 /*
  * Display a new random Pokemon
@@ -206,12 +196,10 @@ function checkPokemonLoaded() {
     if(!loadedImage.complete || loadedImage.naturalWidth == 0 || loadedImage.naturalHeight == 0) {
     
         if(++consecutiveLoadFails < 3) {
-            document.getElementById('nextCountdown').innerHTML = 'This is taking a while to load. Do you want to try loading another one? It won\'t affect your streak. <a href="#" onclick="newPokemon();">Load a new Pok&eacute;mon?</a>';
+            console.log("Pokemon failed to load, trying again.");
         } else {
-            document.getElementById('nextCountdown').innerHTML = 'Is your connection slow or down? Maybe try a harder difficulty, they load faster. <a href="#" onclick="newPokemon();">Load a new Pok&eacute;mon?</a>';
+            newPokemon();
         }
-        
-        document.getElementById('nextCountdown').setAttribute('style', 'display: block');
     
     } else {
     
@@ -253,6 +241,9 @@ function silhouette(imageUrl, canvasId, doSilhouette) {
 
     var canvas = document.getElementById(canvasId),
         ctx = canvas.getContext('2d');
+
+    var jcanvas = $('#' + canvasId);
+    jcanvas.hide();
         
     loadedImage = new Image();
         
@@ -286,7 +277,8 @@ function silhouette(imageUrl, canvasId, doSilhouette) {
             
             ctx.putImageData(rawImage,0,0);
         }
-        centrePokemon();
+        centerPokemon();
+        jcanvas.fadeIn("slow");
         startTime = new Date().getTime();
     }
 }
@@ -305,7 +297,7 @@ function giveAnswer() {
  * Centres the canvas with the Pokemon in it
  */
 
-function centrePokemon() {
+function centerPokemon() {
     c = document.getElementById('shadowImage');
     c.setAttribute('style', 'margin-top:' + Math.floor((350 - c.height) / 2) + 'px');
 }
@@ -370,29 +362,4 @@ function shuffle(array) {
     }
 
     return array;
-}
-
-/*
- * Cookie stuff from http://www.quirksmode.org/js/cookies.html
- */
- 
-function createCookie(name,value,days) {
-	if (days) {
-		var date = new Date();
-		date.setTime(date.getTime()+(days*24*60*60*1000));
-		var expires = "; expires="+date.toGMTString();
-	}
-	else var expires = "";
-	document.cookie = name+"="+value+expires+"; path=/";
-}
-
-function readCookie(name) {
-	var nameEQ = name + "=";
-	var ca = document.cookie.split(';');
-	for(var i=0;i < ca.length;i++) {
-		var c = ca[i];
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
-		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-	}
-	return null;
 }
