@@ -55,7 +55,7 @@ $(document).ready(function() {
         preloadPokemon(p);
     }
     if (r) {
-        setTimeout(revealPokemon, 2000);
+        setTimeout(revealPokemon, r*1000);
     }
     newPokemon();
 });
@@ -88,7 +88,7 @@ function revealPokemon() {
 
     // Give the Pokemon name
     $('#pokemonGuess').text("Het is " + currentPokemonNames[selectedLanguage].toProperCase() + "!");
-
+    $('#pokemonGuess').addClass('pokemon');
     // Update to any new settings that have been selected
     generateNewNumbers();
     
@@ -242,7 +242,7 @@ function silhouette(imageUrl, canvasId, doSilhouette) {
     var canvas = document.getElementById(canvasId),
         ctx = canvas.getContext('2d');
 
-    var jcanvas = $('#' + canvasId);
+    var jcanvas = $('#canvasContainer');
     jcanvas.hide();
         
     loadedImage = new Image();
@@ -291,6 +291,11 @@ function giveAnswer() {
     revealPokemon();
 }
 
+var getDimensions = function (item) {
+    var img = new Image();
+    img.src = item.css('background-image').replace(/url\(|\)$|"/ig, '');
+    return img.width + ' ' + img.height;
+};
 
 
 /*
@@ -298,8 +303,11 @@ function giveAnswer() {
  */
 
 function centerPokemon() {
+    h = $(document).height();
     c = document.getElementById('shadowImage');
-    c.setAttribute('style', 'margin-top:' + Math.floor((350 - c.height) / 2) + 'px');
+    w = $(document).width();
+    console.log(getDimensions($('html')));
+    c.setAttribute('style', 'margin-top:' + Math.floor((h*.2)) + 'px; margin-left:' + Math.floor(w*.05) + 'px;');
 }
 
 /*

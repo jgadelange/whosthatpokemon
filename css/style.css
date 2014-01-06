@@ -4,6 +4,8 @@ html {
     background: url('../images/background.svg') no-repeat center left fixed;
     background-color: rgb(255, 13, 11);
     background-size: contain;
+    height: 100%;
+    width: 100%;
 }
 
 #pokemonGuess {
@@ -13,4 +15,18 @@ html {
     color: #FFB000;
     -webkit-text-stroke: 2px #005D9D;
     text-shadow: -3px 3px #1D2C5E;
+    -moz-transition:-moz-transform 1.5s;
+    -webkit-transition:-webkit-transform 1.5s;
+    -o-transition:-o-transform 1.5s;
+    transition:transform 1.5s;
+    position:absolute;
+    top:10%;
+    right: 5%;
+}
+
+#pokemonGuess.pokemon {
+    -moz-transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
+    -o-transform:rotate(360deg);
+    transform:rotate(360deg);
 }
