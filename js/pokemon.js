@@ -42,6 +42,16 @@ var imageTimeoutId;
 var upcomingPokemon;
 var upcomingPokemonArrayPos;
 
+function receiveMessage(event) {
+    var message = event.data.split("#");
+    if (message.length == 2) {
+        if (message[0] == "reveal")
+        {
+            setTimeout(revealPokemon, parseInt(message[1])*1000);
+        }
+    }
+}
+window.addEventListener('message', receiveMessage, false);
 
 /*
  * Initiates the page on first load
