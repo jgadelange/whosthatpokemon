@@ -8,7 +8,7 @@
 var currentPokemonNumber;
 var currentPokemonNames = {}; // a dictionary which stores English, French and German names of the current Pokemon
 var currentPokemonImageUrl;
-var selectedLanguage = 'en';
+var selectedLanguage = 'nl';
 
 // For generation selection
 var minPokemonNumber = 1;
@@ -59,13 +59,18 @@ window.addEventListener('message', receiveMessage, false);
 
 $(document).ready(function() {
     generateNewNumbers(true);
-    var p = $.urlParam('pokemon')
-    var r = $.urlParam('reveal')
+    var p = $.urlParam('pokemon');
+    var r = $.urlParam('reveal');
+    var l = $.urlParam('lang');
     if (p) {
         preloadPokemon(p);
     }
     if (r) {
         setTimeout(revealPokemon, r*1000);
+    }
+    if (l && ['en', 'fr', 'de', 'nl'].indexOf(l) >= 0) {
+        selectedLanguage = l;
+        $('#pokemonGuess').text(lang[selectedLanguage]['whosthatpokemon']);
     }
     newPokemon();
 });
@@ -97,7 +102,7 @@ function revealPokemon() {
     silhouette(currentPokemonImageUrl, 'shadowImage', false);
 
     // Give the Pokemon name
-    $('#pokemonGuess').text("Het is " + currentPokemonNames[selectedLanguage].toProperCase() + "!");
+    $('#pokemonGuess').text(lang[selectedLanguage]['its...'] + currentPokemonNames[selectedLanguage].toProperCase() + "!");
     $('#pokemonGuess').addClass('pokemon');
     // Update to any new settings that have been selected
     generateNewNumbers();
@@ -336,7 +341,7 @@ function getRandomPokemonNumber() {
  */
  
 function getPokemonNames(number) {
-    var names = { 'en' : englishPokemon[number-1], 'fr' : frenchPokemon[number-1], 'de' : germanPokemon[number-1] };
+    var names = { 'en' : englishPokemon[number-1], 'fr' : frenchPokemon[number-1], 'de' : germanPokemon[number-1], 'nl' : dutchPokemon[number-1] };
     return names;
 }
 
