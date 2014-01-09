@@ -260,14 +260,9 @@ function silhouette(imageUrl, canvasId, doSilhouette) {
     loadedImage.src = imageUrl;
 
     loadedImage.onload = function() {   
-        // On higher difficulties, the images are smaller. This makes them bigger.
-        if(loadedImage.width <= 100) {
-            canvas.width = loadedImage.width * 4;
-            canvas.height = loadedImage.height * 4;
-        } else {
-            canvas.width = loadedImage.width;
-            canvas.height = loadedImage.height;
-        }
+
+        canvas.width = $(document).height() / 2;
+        canvas.height = $(document).height() / 2;
         
         ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
   
@@ -317,7 +312,7 @@ function centerPokemon() {
     c = document.getElementById('shadowImage');
     w = $(document).width();
     console.log(getDimensions($('html')));
-    c.setAttribute('style', 'margin-top:' + Math.floor((h*.2)) + 'px; margin-left:' + Math.floor(w*.05) + 'px;');
+    c.setAttribute('style', 'margin-top:' + Math.floor(h / 8) + 'px; margin-left:' + Math.floor(h / 8) + 'px;');
 }
 
 /*
