@@ -4,15 +4,15 @@ lang = {
 		"its...": 				"It's "
 	},
 	"fr": {
-		"whosthatpokemon": 		"Quel Pok&eacute;mon Est-Ce?",
+		"whosthatpokemon": 		"Quel Pokémon Est-Ce?",
 		"its...": 				"C\'est "
 	},
 	"de": {
-		"whosthatpokemon": 		"Wer ist das Pok&eacute;mon?",
+		"whosthatpokemon": 		"Wer ist das Pokémon?",
 		"its...": 				"Es ist ",
 	},
 	"nl": {
-		"whosthatpokemon": 		"Wie is deze Pok&eacute;mon?",
+		"whosthatpokemon": 		"Wie is deze Pokémon?",
 		"its...": 				"Het is "
 	}
 };
