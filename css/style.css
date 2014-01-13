@@ -35,6 +35,6 @@ html {
     #pokemonGuess {
         font-size: 60pt;
         -webkit-text-stroke: 5px #005D9D;
-        text-shadow: -4px 4px #1D2C5E;
+        text-shadow: -6px 6px #1D2C5E;
     }
 }
