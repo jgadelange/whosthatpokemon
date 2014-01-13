@@ -13,7 +13,7 @@ html {
     font-weight: bold;
     font-size: 50pt;
     color: #FFB000;
-    -webkit-text-stroke: 2px #005D9D;
+    -webkit-text-stroke: 3px #005D9D;
     text-shadow: -3px 3px #1D2C5E;
     -moz-transition:-moz-transform 1.5s;
     -webkit-transition:-webkit-transform 1.5s;
@@ -29,4 +29,12 @@ html {
     -webkit-transform:rotate(360deg);
     -o-transform:rotate(360deg);
     transform:rotate(360deg);
+}
+
+@media screen and (min-width: 1920px) {
+    #pokemonGuess {
+        font-size: 60pt;
+        -webkit-text-stroke: 5px #005D9D;
+        text-shadow: -4px 4px #1D2C5E;
+    }
 }
