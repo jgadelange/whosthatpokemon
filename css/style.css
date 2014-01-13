@@ -14,13 +14,13 @@ html {
     font-size: 50pt;
     color: #FFB000;
     -webkit-text-stroke: 3px #005D9D;
-    text-shadow: -3px 3px #1D2C5E;
+    text-shadow: -5px 5px #1D2C5E;
     -moz-transition:-moz-transform 1.5s;
     -webkit-transition:-webkit-transform 1.5s;
     -o-transition:-o-transform 1.5s;
     transition:transform 1.5s;
     position:absolute;
-    top:10%;
+    top:10px;
     right: 5%;
 }
 

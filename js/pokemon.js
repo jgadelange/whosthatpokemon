@@ -266,8 +266,8 @@ function silhouette(imageUrl, canvasId, doSilhouette) {
 
     loadedImage.onload = function() {   
 
-        canvas.width = $(document).height() / 2;
         canvas.height = $(document).height() / 2;
+        canvas.width = loadedImage.width * (canvas.height / loadedImage.height);
         
         ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
   
